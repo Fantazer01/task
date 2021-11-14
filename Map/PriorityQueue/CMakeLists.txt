@@ -4,7 +4,7 @@ project(testPriorityQueue)
 set(CMAKE_CXX_STANDARD 14)
 
 set(SOURCES testingPriorityQueue.cpp
-            PriorityQueue.cpp)
+        PriorityQueue.cpp)
 
 
 add_executable(${PROJECT_NAME} ${SOURCES})
