@@ -79,31 +79,55 @@ std::vector<MapOfLocation::WayDescription> MapOfLocation::findShortWays2(const i
 
 
     while (!queue.empty()) {
+        //std::cout << queue.size() << std::endl;
+        //std::cout << queue.empty() << std::endl;
         curVer = queue.extractMim();
         distance[curVer.first] = curVer.second;
 
         for (int i = 0; i < vertexes.size(); ++i) {
             if (distanceBetweenVertexes(curVer.first, i) < 0)
                 continue;
-            if (distance[i] < 0 || distance[i] > distanceBetweenVertexes(curVer.first, i) + distance[curVer.first])
+            if (distance[i] < 0 || distance[i] > distanceBetweenVertexes(curVer.first, i) + distance[curVer.first]) {
+                //std::cout << "distance: " << i << " " << distance[i] << std::endl;
+                distance[i] = distanceBetweenVertexes(curVer.first, i) + distance[curVer.first];
                 queue.decreaseKey(i, distanceBetweenVertexes(curVer.first, i) + distance[curVer.first]);
                 pred[i] = curVer.first;
+            }
         }
     }
 
+   // std::cout << "point 4\n";
+
     int pred_temp = -1;
-    list<int> way_list;
+
 
     for (int i = 0; i < vertexes.size(); ++i) {
         ways[i].from = min(index_vertex, i);
         ways[i].to = max(index_vertex, i);
-        for (pred_temp = i; pred_temp != -1; pred_temp = pred[pred_temp])
+        list<int> way_list;
+        std::cout << "way#: ";
+        for (pred_temp = i; pred_temp != -1; pred_temp = pred[pred_temp]) {
+            std::cout << pred_temp << " ";
             way_list.push_back(pred_temp);
+        }
+        std::cout << std::endl;
         if (index_vertex < i)
             way_list.reverse();
+
         ways[i].way.resize(way_list.size());
-        for (int index : way_list)
-            ways[i].way.push_back(index);
+        std::cout << "way#2: ";
+        int j = 0;
+        for (int index : way_list) {
+            std::cout << index << " ";
+            ways[i].way[j] = index;
+            ++j;
+        }
+
+        std::cout << std::endl;
+        std::cout << "way#3(" << ways[i].way.size() << "): ";
+        for (int b : ways[i].way)
+            std::cout << b << " ";
+        std::cout << std::endl;
         way_list.clear();
     }
 
@@ -118,11 +142,16 @@ MapOfLocation::MapOfLocation(const std::vector<Vertex> &_vertexes, const std::ve
     std::vector <WayDescription> FoundWays;
 
     for (i = 0; i < size; ++i) {
-        FoundWays = findShortWays(vertexes[i].second);
-
-        for (j = 0; j < FoundWays.size(); ++j) {
-            tableOfShortestWay[start++] = FoundWays[j];
+        FoundWays = findShortWays2(vertexes[i].second);
+        for (WayDescription a : FoundWays) {
+            std::cout << "from: " << a.from << " to: " << a.to << " way: ";
+            for (int b : a.way)
+                std::cout << b << " ";
+            std::cout << std::endl;
         }
+/*        for (j = 0; j < FoundWays.size(); ++j) {
+            tableOfShortestWay[start++] = FoundWays[j];
+        }*/
     }
 
 }
