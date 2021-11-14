@@ -3,61 +3,17 @@
 //
 
 #include "MapOfLocation.h"
-#include <string>
 #include <iostream>
 #include <list>
 
 
-void MapOfLocation::initializationParameters(std::pair<int, int> *setOfVertexes, int *color, int *pred, int *distance) {
+void MapOfLocation::initializationParameters(std::pair<int, int> *setOfVertexes, int *pred, int *distance) {
     for (int i = 0; i < vertexes.size(); ++i) {
         setOfVertexes[i].first = vertexes[i].second;
         setOfVertexes[i].second = -1;
-        color[i] = 0;
         pred[i] = -1;
         distance[i] = -1;
     }
-}
-
-std::vector<MapOfLocation::WayDescription> MapOfLocation::findShortWays(const int &index_vertex) {
-    std::vector<WayDescription> ways;//вектор самых коротких путей от вершины, индекс которой передается, до каждой другой вершины
-    //заготовка для алгоритма Дейкстры
-    int time = 0;
-    std::pair<int, int> setOfVertexes[vertexes.size()];//first - index, second - distance
-    int color[vertexes.size()];
-    int pred[vertexes.size()];
-    int timer[vertexes.size()][2];
-    int distance[vertexes.size()];
-    std::pair<int, int> gotTheVertex;
-    //bool endDFS;
-
-    initializationParameters(setOfVertexes, color, pred, distance);
-    PriorityQueue queue(vertexes.size(), setOfVertexes);
-    queue.decreaseKey(index_vertex, 0);
-    color[gotTheVertex.first] = 1;
-
-
-    while (!queue.empty()) {
-        //endDFS = true;
-        //std::cout << queue.getHeapSize() << std::endl;
-        gotTheVertex = queue.extractMim();
-
-        timer[gotTheVertex.first][0] = time;
-        for (int i = 0; i < vertexes.size(); ++i) {
-            if (distance[i])
-            if (distanceBetweenVertexes(gotTheVertex.first, i) > 0 && color[i] == 0) {
-                queue.decreaseKey(i, distanceBetweenVertexes(gotTheVertex.first, i));
-                color[i] = 1;
-                //endDFS = false;
-                pred[i] = gotTheVertex.first;
-            }
-        }
-        //if (endDFS)
-        //    timer[gotTheVertex.first][1] = time;
-
-        ++time;
-    }
-
-    return ways;
 }
 
 std::vector<MapOfLocation::WayDescription> MapOfLocation::findShortWays2(const int &index_vertex) {
@@ -66,16 +22,13 @@ std::vector<MapOfLocation::WayDescription> MapOfLocation::findShortWays2(const i
     vector<WayDescription> ways(vertexes.size());//вектор самых коротких путей от вершины, индекс которой передается, до каждой другой вершины
     //заготовка для алгоритма Дейкстры
     pair<int, int> setOfVertexes[vertexes.size()];//first - index, second - distance
-    int color[vertexes.size()];
     int pred[vertexes.size()];
     int distance[vertexes.size()];
-    pair<int, int> gotTheVertex;
     pair<int, int> curVer;
 
-    initializationParameters(setOfVertexes, color, pred, distance);
+    initializationParameters(setOfVertexes, pred, distance);
     PriorityQueue queue(vertexes.size(), setOfVertexes);
     queue.decreaseKey(index_vertex, 0);
-    color[gotTheVertex.first] = 1;
 
 
     while (!queue.empty()) {
@@ -93,9 +46,7 @@ std::vector<MapOfLocation::WayDescription> MapOfLocation::findShortWays2(const i
         }
     }
 
-
     int pred_temp = -1;
-
 
     for (int i = 0; i < vertexes.size(); ++i) {
         ways[i].from = index_vertex;
@@ -105,7 +56,6 @@ std::vector<MapOfLocation::WayDescription> MapOfLocation::findShortWays2(const i
             way_list.push_back(pred_temp);
         }
 
-        //if (index_vertex < i)
         way_list.reverse();
 
         ways[i].way.resize(way_list.size());
