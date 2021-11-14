@@ -39,18 +39,10 @@ void PriorityQueue::correct(int &index) {
 }
 
 void PriorityQueue::decreaseKey(const int &index, const int &distance) {
-//
-//    std::cout << "begin " << index << " " << distance << std::endl;
-//    for (int i = 0; i < heap_size; ++i)
-//        std::cout << array[i].first << " " << array[i].second << std::endl;
-//    std::cout << "------------\n";
     for (int i = 0; i < heap_size; ++i) {
         if (array[i].first == index) {
             array[i].second = distance;
             correct(i);
-            //for (int i = 0; i < heap_size; ++i)
-            //    std::cout << array[i].first << " " << array[i].second << std::endl;
-            //std::cout << "end\n";
             return;
         }
     }
