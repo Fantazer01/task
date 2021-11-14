@@ -5,11 +5,21 @@
 #include <iostream>
 #include "Graph.h"
 
-int Graph::findVertex(const Vertex &ver) const {
-    int i, size = vertexes.size();
+std::istream& operator >> (std::istream& input, Graph::Vertex &ver) {
+    input >> ver.id;
+    return input;
+}
 
-    for (i = 0; i < size; ++i)
-        if (vertexes[i].first.getName() == ver.getName())
+std::ostream& operator << (std::ostream& output, Graph::Vertex &ver) {
+    output << ver.id;
+    return output;
+}
+
+int Graph::findVertex(const Vertex &ver) const {
+    int size = vertexes.size();
+
+    for (int i = 0; i < size; ++i)
+        if (vertexes[i].first == ver)
             return i;
 
     return -1;
@@ -40,9 +50,7 @@ void Graph::initialization(const int &size, const std::vector<Edge> &_signature)
 }
 
 Graph::Graph(const std::vector<Vertex> &_vertexes, const std::vector<Edge> &_signature): vertexes(_vertexes.size()) {
-    int i;
-
-    for (i = 0; i < vertexes.size(); ++i)
+    for (int i = 0; i < vertexes.size(); ++i)
         vertexes[i] = std::pair<Vertex, int>(_vertexes[i], i);
 
     _signature.size();
@@ -58,7 +66,7 @@ Graph::~Graph() {
     delete [] signature;
 }
 
-int Graph::distanceBetweenVertexes(const int &index1, const int &index2) {
+int Graph::distBetweenVertexes(const int &index1, const int &index2) {
     if (index1 >= vertexes.size() || index2 >= vertexes.size() || index1 < 0 || index2 < 0)
         throw std::invalid_argument("invalid index");
 
@@ -66,6 +74,29 @@ int Graph::distanceBetweenVertexes(const int &index1, const int &index2) {
         return 0;
 
     return signature[std::min(index1, index2)][std::max(index1, index2)];
+}
+
+std::ostream& operator << (std::ostream& output, Graph &graph) {
+    int i, j, k, size = graph.vertexes.size();
+
+    output << "Vertexes:" << std::endl;
+    for (i = 0; i < size; ++i)
+        output << "global id: " << graph.vertexes[i].first << ", local id: " << graph.vertexes[i].second<< std::endl;
+
+    for (i = 0; i < size; ++i) {
+        output << "signature(" << i << "): ";
+        for (j = 0, k = 0; j < size; ++j) {
+            if (graph.distBetweenVertexes(i, j) != -1 && i != j) {
+                output << j << "(" << graph.distBetweenVertexes(i, j) << ") ";
+                ++k;
+            }
+        }
+        if (k == 0)
+            output << "nothing";
+        output << std::endl;
+    }
+
+    return output;
 }
 
 

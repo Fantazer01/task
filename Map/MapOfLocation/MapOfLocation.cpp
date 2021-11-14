@@ -36,11 +36,11 @@ std::vector<MapOfLocation::WayDescription> MapOfLocation::findShortWays2(const i
         distance[curVer.first] = curVer.second;
 
         for (int i = 0; i < vertexes.size(); ++i) {
-            if (distanceBetweenVertexes(curVer.first, i) < 0)
+            if (distBetweenVertexes(curVer.first, i) < 0)
                 continue;
-            if (distance[i] < 0 || distance[i] > distanceBetweenVertexes(curVer.first, i) + distance[curVer.first]) {
-                distance[i] = distanceBetweenVertexes(curVer.first, i) + distance[curVer.first];
-                queue.decreaseKey(i, distanceBetweenVertexes(curVer.first, i) + distance[curVer.first]);
+            if (distance[i] < 0 || distance[i] > distBetweenVertexes(curVer.first, i) + distance[curVer.first]) {
+                distance[i] = distBetweenVertexes(curVer.first, i) + distance[curVer.first];
+                queue.decreaseKey(i, distBetweenVertexes(curVer.first, i) + distance[curVer.first]);
                 pred[i] = curVer.first;
             }
         }
