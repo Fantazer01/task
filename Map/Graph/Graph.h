@@ -1,7 +1,6 @@
 #include <utility>
 #include <vector>
 #include <iostream>
-#include <string>
 
 //
 // Created by oleg on 07.11.2021.
@@ -32,11 +31,14 @@ public:
         Vertex ver2;
         int distance;
     };
+
+private:
+    int **signature;//signature
 protected:
     std::vector<std::pair<Vertex, int>> vertexes;//vertexes
-    int **signature{};//signature
+
     //helper methods
-    void initialization(const int &size, const std::vector<Edge> &_signature);
+    void initialization(const unsigned int &size, const std::vector<Edge> &_signature);
     int distBetweenVertexes(const int &index1, const int &index2);
 public:
     Graph():signature(nullptr) {}

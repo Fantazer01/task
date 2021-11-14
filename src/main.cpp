@@ -15,13 +15,14 @@ int main() {
 
     vector<Graph::Edge> signature =
     {
-            {Graph::Vertex(1), Graph::Vertex(1), 1},
+            {Graph::Vertex(1), Graph::Vertex(2), 1},
             {Graph::Vertex(1), Graph::Vertex(3), 2},
             {Graph::Vertex(2), Graph::Vertex(3), 5},
             {Graph::Vertex(2), Graph::Vertex(999), 5},
             {Graph::Vertex(3), Graph::Vertex(999), 5}
     };
     Graph graph(vertexes, signature);
+
     cout << graph << endl;
     /*
     MapOfLocation map(vertexes, signature);
