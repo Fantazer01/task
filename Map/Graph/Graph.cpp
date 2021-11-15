@@ -9,7 +9,7 @@ std::istream& operator >> (std::istream& input, Graph::Vertex &ver) {
     return input;
 }
 
-std::ostream& operator << (std::ostream& output, Graph::Vertex &ver) {
+std::ostream& operator << (std::ostream& output, const Graph::Vertex &ver) {
     output << ver.id;
     return output;
 }
@@ -22,6 +22,16 @@ int Graph::findVertex(const Vertex &ver) const {
             return i;
 
     return -1;
+}
+
+Graph::Vertex Graph::getVertex(const int &index) {
+    unsigned int size = vertexes.size();
+
+    for (int i = 0; i < size; ++i)
+        if (vertexes[i].second == index)
+            return Vertex(vertexes[i].first);
+
+    throw std::invalid_argument("vertex don't exist");
 }
 
 void Graph::initialization(const unsigned int &size, const std::vector<Edge> &_signature) {
@@ -102,7 +112,7 @@ std::ostream& operator << (std::ostream& output, Graph &graph) {
         output << "global id: " << graph.vertexes[i].first << ", local id: " << graph.vertexes[i].second<< std::endl;
 
     for (i = 0; i < size; ++i) {
-        output << "signature(" << i << "): ";
+        output << "signature(" << graph.getVertex(i) << "[" << i << "]): ";
         for (j = 0, k = 0; j < size; ++j) {
             if (graph.distBetweenVertexes(i, j) != -1 && i != j) {
                 output << j << "(" << graph.distBetweenVertexes(i, j) << ") ";
@@ -113,13 +123,6 @@ std::ostream& operator << (std::ostream& output, Graph &graph) {
             output << "nothing";
         output << std::endl;
     }
-/*
-    for (i = 0; i < size; ++i) {
-        for (j = 0; j < size - i; ++j)
-            std::cout << graph.signature[i][j] << " ";
-        std::cout << std::endl;
-    }
-*/
 
     return output;
 }

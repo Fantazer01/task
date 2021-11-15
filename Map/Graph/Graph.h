@@ -23,7 +23,7 @@ public:
         bool operator == (const Vertex &ver2) const { return id == ver2.id; }
 
         friend std::istream& operator >> (std::istream&, Vertex &);
-        friend std::ostream& operator << (std::ostream&, Vertex &);
+        friend std::ostream& operator << (std::ostream&, const Vertex &);
     };
 
     struct Edge {
@@ -40,6 +40,8 @@ protected:
     //helper methods
     void initialization(const unsigned int &size, const std::vector<Edge> &_signature);
     int distBetweenVertexes(const int &index1, const int &index2);
+    int findVertex(const Vertex &ver) const;
+    Vertex getVertex(const int &index);
 public:
     Graph():signature(nullptr) {}
     Graph(const std::vector<Vertex> &_vertexes, const std::vector<Edge> &_signature);
@@ -47,7 +49,7 @@ public:
     Graph(Graph && graph) noexcept ;
     ~Graph();
 
-    int findVertex(const Vertex &ver) const;
+
 
     friend std::ostream& operator << (std::ostream&, Graph &);
 };
