@@ -16,6 +16,7 @@ public:
         int to;
         std::vector<int> way;
         void reverse();
+        //friend std::ostream& operator << (std::ostream&, const WayDescription &);
     };
 private:
     //таблица кратчайших путей

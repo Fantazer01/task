@@ -24,6 +24,12 @@
  *
  */
 
+void printWay(std::vector<MapOfLocation::Vertex> &way) {
+    for (auto a : way)
+        std::cout << a.getName() << " ";
+    std::cout << std::endl;
+}
+
 int main(int argc, char* argv[]) {
     using namespace std;
 
@@ -31,21 +37,14 @@ int main(int argc, char* argv[]) {
     if (argc > 1)
         filename = argv[1];
 
-    //Graph graph = initGraph(filename);
-    //cout << graph << endl;
-
     MapOfLocation map = initMap(filename);
     cout << map;
+
     vector<MapOfLocation::Vertex> way = map.FindShortestWay(Graph::Vertex(0), Graph::Vertex(1));
-    for (auto a : way) {
-        cout << a.getName() << " ";
-    }
-    cout << endl;
+    printWay(way);
+
     way = map.FindShortestWay(Graph::Vertex(1), Graph::Vertex(0));
-    for (auto a : way) {
-        cout << a.getName() << " ";
-    }
-    cout << endl;
+    printWay(way);
 
     return 0;
 }

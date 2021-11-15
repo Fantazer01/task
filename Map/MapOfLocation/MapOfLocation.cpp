@@ -89,8 +89,8 @@ void MapOfLocation::WayDescription::reverse() {
     int size = way.size();
     std::swap(from, to);
 
-    for (int i = 0; i < size; ++i)
-        std::swap(way[i], way[size - i]);
+    for (int i = 0; i < size/2; ++i)
+        std::swap(way[i], way[size - i - 1]);
 }
 
 MapOfLocation::WayDescription MapOfLocation::ShortestWayFromTo(int &from, int &to) {
