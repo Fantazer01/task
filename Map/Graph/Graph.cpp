@@ -55,11 +55,34 @@ Graph::Graph(const std::vector<Vertex> &_vertexes, const std::vector<Edge> &_sig
     initialization(vertexes.size(), _signature);
 }
 
-Graph::~Graph() {
+Graph::Graph(const Graph &graph): vertexes(graph.vertexes.size()) {
     unsigned int size = vertexes.size();
 
     for (int i = 0; i < size; ++i)
-        delete [] signature[i];
+        vertexes[i] = graph.vertexes[i];
+
+    if (graph.signature != nullptr) {
+        signature = new int*[size];
+
+        for (int i = 0; i < size; ++i) {
+            signature[i] = new int[size - i];
+            for (int j = 0; j < size - i; ++j)
+                signature[i][j] = graph.signature[i][j];
+        }
+    }
+
+}
+
+Graph::Graph(Graph && graph) noexcept: vertexes(std::move(graph.vertexes)), signature(graph.signature) {
+    graph.signature = nullptr;
+}
+
+Graph::~Graph() {
+    unsigned int size = vertexes.size();
+
+    if (signature != nullptr)
+        for (int i = 0; i < size; ++i)
+            delete [] signature[i];
     delete [] signature;
 }
 

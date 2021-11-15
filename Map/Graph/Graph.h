@@ -43,6 +43,8 @@ protected:
 public:
     Graph():signature(nullptr) {}
     Graph(const std::vector<Vertex> &_vertexes, const std::vector<Edge> &_signature);
+    Graph(const Graph &graph);
+    Graph(Graph && graph) noexcept ;
     ~Graph();
 
     int findVertex(const Vertex &ver) const;
