@@ -16,7 +16,7 @@ void MapOfLocation::initializationParameters(std::pair<int, int> *setOfVertexes,
     }
 }
 
-std::vector<MapOfLocation::WayDescription> MapOfLocation::findShortWays2(const int &index_vertex) {
+std::vector<MapOfLocation::WayDescription> MapOfLocation::findShortWays(const int &index_vertex) {
     using namespace std;
 
     vector<WayDescription> ways(vertexes.size());//вектор самых коротких путей от вершины, индекс которой передается, до каждой другой вершины
@@ -74,32 +74,37 @@ std::vector<MapOfLocation::WayDescription> MapOfLocation::findShortWays2(const i
 
 MapOfLocation::MapOfLocation(const std::vector<Vertex> &_vertexes, const std::vector<Edge> &_signature)
         :Graph(_vertexes, _signature), tableOfShortestWay(_vertexes.size()*_vertexes.size()) {
-    int i, j;
     unsigned int size = vertexes.size();
     int start = 0;
     std::vector <WayDescription> FoundWays;
 
-    for (i = 0; i < size; ++i) {
-        FoundWays = findShortWays2(vertexes[i].second);
-        for (WayDescription a : FoundWays) {
-            std::cout << "from: " << a.from << " to: " << a.to << " way: ";
-            for (int b : a.way)
-                std::cout << b << " ";
-            std::cout << std::endl;
-        }
-        std::cout << std::endl;
-        for (j = 0; j < FoundWays.size(); ++j) {
-            tableOfShortestWay[start++] = FoundWays[j];
-        }
+    for (int i = 0; i < size; ++i) {
+        FoundWays = findShortWays(vertexes[i].second);
+        for (int j = 0; j < FoundWays.size(); ++j) { tableOfShortestWay[start++] = FoundWays[j]; }
     }
 
 }
 
+void MapOfLocation::WayDescription::reverse() {
+    int size = way.size();
+    std::swap(from, to);
+
+    for (int i = 0; i < size; ++i)
+        std::swap(way[i], way[size - i]);
+}
+
 MapOfLocation::WayDescription MapOfLocation::ShortestWayFromTo(int &from, int &to) {
     //возвращает запись из таблицы, где хранятся уже готовые заготовки путей
-    for (auto a : tableOfShortestWay)
-        if (a.from == from && a.to == to)
+    int min = std::min(from, to);
+    int max = std::max(from, to);
+
+    for (WayDescription a : tableOfShortestWay)
+        if (a.from == min && a.to == max) {
+            if (from != min)
+                a.reverse();
             return a;
+        }
+
     return {};
 }
 

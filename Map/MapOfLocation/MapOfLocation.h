@@ -15,13 +15,14 @@ public:
         int from;
         int to;
         std::vector<int> way;
+        void reverse();
     };
 private:
     //таблица кратчайших путей
     std::vector<WayDescription> tableOfShortestWay;
     //helper methods
     void initializationParameters(std::pair<int, int> *setOfVertexes, int *pred, int *distance);
-    std::vector<WayDescription> findShortWays2(const int &index_vertex);
+    std::vector<WayDescription> findShortWays(const int &index_vertex);
     WayDescription ShortestWayFromTo(int &from, int &to);
 public:
     MapOfLocation() = default;

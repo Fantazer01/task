@@ -41,6 +41,11 @@ int main(int argc, char* argv[]) {
         cout << a.getName() << " ";
     }
     cout << endl;
+    way = map.FindShortestWay(Graph::Vertex(1), Graph::Vertex(0));
+    for (auto a : way) {
+        cout << a.getName() << " ";
+    }
+    cout << endl;
 
     return 0;
 }
