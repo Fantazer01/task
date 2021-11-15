@@ -7,15 +7,9 @@
 #include <fstream>
 #include <vector>
 
-
-
-Graph readGraph(std::istream &input) {
-    using namespace std;
-    vector<Graph::Vertex> vertexes;
-    vector<Graph::Edge> edges;
-    Graph::Vertex ver;
-    Graph::Edge edge;
+void readVer(std::istream &input, std::vector<Graph::Vertex> &vertexes) {
     char c;
+    Graph::Vertex ver;
 
     for (input >> c; !input.eof() && c != '}'; input >> c) {
         if (c == '{') {
@@ -27,6 +21,11 @@ Graph readGraph(std::istream &input) {
             input.clear();
         }
     }
+}
+
+void readEdge(std::istream &input, std::vector<Graph::Edge> &edges) {
+    char c;
+    Graph::Edge edge;
 
     for (input >> c; !input.eof(); input >> c) {
         if (c == '(') {
@@ -35,17 +34,23 @@ Graph readGraph(std::istream &input) {
                 input >> edge.ver2;
                 if (input.good() && input.get(c).good() && c == '|') {
                     input >> edge.distance;
-                    if (input.good()) {
+                    if (input.good())
                         edges.push_back(edge);
-                        std::cout << edge.ver1 <<" " << edge.ver2 << " " << edge.distance << std::endl;
-                    }
-
                 }
             }
             input.clear();
         }
-
     }
+}
+
+Graph readGraph(std::istream &input) {
+    using namespace std;
+    vector<Graph::Vertex> vertexes;
+    vector<Graph::Edge> edges;
+
+    readVer(input, vertexes);
+
+    readEdge(input, edges);
 
     return Graph(vertexes, edges);
 }
