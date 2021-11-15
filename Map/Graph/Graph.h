@@ -49,6 +49,8 @@ public:
     Graph(Graph && graph) noexcept ;
     ~Graph();
 
+    Graph& operator = (const Graph &);
+
     friend std::ostream& operator << (std::ostream&, Graph &);
 };
 

@@ -103,6 +103,36 @@ int Graph::distBetweenVertexes(const int &index1, const int &index2) {
     return signature[std::min(index1, index2)][std::max(index1, index2) - std::min(index1, index2)];
 }
 
+Graph& Graph::operator = (const Graph &graph) {
+    if (this == &graph)
+        return *this;
+
+    unsigned int size = vertexes.size();
+
+    if (signature != nullptr)
+        for (int i = 0; i < size; ++i)
+            delete [] signature[i];
+    delete [] signature;
+
+    vertexes.resize(graph.vertexes.size());
+    size = graph.vertexes.size();
+
+    for (int i = 0; i < size; ++i)
+        vertexes[i] = graph.vertexes[i];
+
+    if (graph.signature != nullptr) {
+        signature = new int*[size];
+
+        for (int i = 0; i < size; ++i) {
+            signature[i] = new int[size - i];
+            for (int j = 0; j < size - i; ++j)
+                signature[i][j] = graph.signature[i][j];
+        }
+    }
+
+    return *this;
+}
+
 std::ostream& operator << (std::ostream& output, Graph &graph) {
     int i, j, k;
     unsigned int size = graph.vertexes.size();
