@@ -8,6 +8,7 @@
 #include <vector>
 
 
+
 Graph readGraph(std::istream &input) {
     using namespace std;
     vector<Graph::Vertex> vertexes;
@@ -28,12 +29,10 @@ Graph readGraph(std::istream &input) {
     }
 
     for (input >> c; !input.eof(); input >> c) {
-        std::cout << c;
         if (c == '(') {
             input >> edge.ver1;
             if (input.good() && input.get(c).good() && c == ':') {
                 input >> edge.ver2;
-                std::cout << c;
                 if (input.good() && input.get(c).good() && c == '|') {
                     input >> edge.distance;
                     if (input.good()) {
@@ -42,7 +41,6 @@ Graph readGraph(std::istream &input) {
                     }
 
                 }
-                std::cout << c;
             }
             input.clear();
         }

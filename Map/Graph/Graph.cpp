@@ -44,7 +44,7 @@ void Graph::initialization(const unsigned int &size, const std::vector<Edge> &_s
         a = findVertex(_signature[i].ver1);
         b = findVertex(_signature[i].ver2);
         if (a != -1 && b != -1 && a != b)
-            signature[std::min(a, b)][std::max(a,b)] = _signature[i].distance;
+            signature[std::min(a, b)][std::max(a,b)-std::min(a, b)] = _signature[i].distance;
     }
 }
 
@@ -113,6 +113,13 @@ std::ostream& operator << (std::ostream& output, Graph &graph) {
             output << "nothing";
         output << std::endl;
     }
+/*
+    for (i = 0; i < size; ++i) {
+        for (j = 0; j < size - i; ++j)
+            std::cout << graph.signature[i][j] << " ";
+        std::cout << std::endl;
+    }
+*/
 
     return output;
 }
