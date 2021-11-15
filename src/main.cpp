@@ -1,8 +1,9 @@
 #include <iostream>
 #include "Graph.h"
 #include "MapOfLocation.h"
+#include "logic.h"
 
-int main() {
+int main(int argc, char* argv[]) {
     using namespace std;
 
     vector<Graph::Vertex> vertexes =
@@ -21,8 +22,11 @@ int main() {
             {Graph::Vertex(2), Graph::Vertex(999), 5},
             {Graph::Vertex(3), Graph::Vertex(999), 5}
     };
-    Graph graph(vertexes, signature);
+    char *filename = nullptr;
+    if (argc > 1)
+        filename = argv[1];
 
+    Graph graph = initGraph(filename);
     cout << graph << endl;
     /*
     MapOfLocation map(vertexes, signature);

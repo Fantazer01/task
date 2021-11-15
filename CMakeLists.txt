@@ -6,7 +6,8 @@ set(CMAKE_CXX_STANDARD 14)
 set(SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp
         Map/Graph/Graph.cpp
         Map/MapOfLocation/MapOfLocation.cpp
-        Map/PriorityQueue/PriorityQueue.cpp)
+        Map/PriorityQueue/PriorityQueue.cpp
+        src/logic.cpp)
 
 include_directories(Map/PriorityQueue)
 
