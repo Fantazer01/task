@@ -6,7 +6,9 @@
 #define TASK1_LOGIC_H
 
 #include "Graph.h"
+#include "MapOfLocation.h"
 
 Graph initGraph(char *filename);
+MapOfLocation initMap(char *filename);
 
 #endif //TASK1_LOGIC_H

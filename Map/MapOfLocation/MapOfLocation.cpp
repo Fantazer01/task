@@ -74,7 +74,8 @@ std::vector<MapOfLocation::WayDescription> MapOfLocation::findShortWays2(const i
 
 MapOfLocation::MapOfLocation(const std::vector<Vertex> &_vertexes, const std::vector<Edge> &_signature)
         :Graph(_vertexes, _signature), tableOfShortestWay(_vertexes.size()*_vertexes.size()) {
-    int i, j, size = vertexes.size();
+    int i, j;
+    unsigned int size = vertexes.size();
     int start = 0;
     std::vector <WayDescription> FoundWays;
 
@@ -99,7 +100,7 @@ MapOfLocation::WayDescription MapOfLocation::ShortestWayFromTo(int &from, int &t
     for (auto a : tableOfShortestWay)
         if (a.from == from && a.to == to)
             return a;
-    return MapOfLocation::WayDescription();
+    return {};
 }
 
 std::vector<MapOfLocation::Vertex> MapOfLocation::FindShortestWay(const Graph::Vertex &ver1, const Graph::Vertex &ver2) {

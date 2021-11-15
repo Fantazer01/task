@@ -3,38 +3,44 @@
 #include "MapOfLocation.h"
 #include "logic.h"
 
-int main(int argc, char* argv[]) {
-    using namespace std;
-
-    vector<Graph::Vertex> vertexes =
+/*
+ *     vector<Graph::Vertex> vertexes =
     {
              Graph::Vertex(1),
              Graph::Vertex(2),
              Graph::Vertex(3),
-             Graph::Vertex(999)
+             Graph::Vertex(0)
     };
 
     vector<Graph::Edge> signature =
     {
-            {Graph::Vertex(1), Graph::Vertex(2), 1},
-            {Graph::Vertex(1), Graph::Vertex(3), 2},
-            {Graph::Vertex(2), Graph::Vertex(3), 5},
-            {Graph::Vertex(2), Graph::Vertex(999), 5},
-            {Graph::Vertex(3), Graph::Vertex(999), 5}
+            {Graph::Vertex(1), Graph::Vertex(2), 4},
+            {Graph::Vertex(1), Graph::Vertex(3), 1},
+            {Graph::Vertex(2), Graph::Vertex(3), 2},
+            {Graph::Vertex(2), Graph::Vertex(0), 4},
+            {Graph::Vertex(3), Graph::Vertex(0), 8}
     };
+
+ *
+ */
+
+int main(int argc, char* argv[]) {
+    using namespace std;
+
     char *filename = nullptr;
     if (argc > 1)
         filename = argv[1];
 
-    Graph graph = initGraph(filename);
-    cout << graph << endl;
-    /*
-    MapOfLocation map(vertexes, signature);
-    vector<MapOfLocation::Vertex> way = map.FindShortestWay(Graph::Vertex("Warehouse"), Graph::Vertex("1"));
+    //Graph graph = initGraph(filename);
+    //cout << graph << endl;
+
+    MapOfLocation map = initMap(filename);
+    cout << map;
+    vector<MapOfLocation::Vertex> way = map.FindShortestWay(Graph::Vertex(0), Graph::Vertex(1));
     for (auto a : way) {
         cout << a.getName() << " ";
     }
-    cout << endl;*/
-    std::cout << "Hello, World!" << std::endl;
+    cout << endl;
+
     return 0;
 }

@@ -65,3 +65,26 @@ Graph initGraph(char *filename) {
     else
         return {};
 }
+
+MapOfLocation readMap(std::istream &input) {
+    using namespace std;
+    vector<Graph::Vertex> vertexes;
+    vector<Graph::Edge> edges;
+
+    readVer(input, vertexes);
+
+    readEdge(input, edges);
+
+    return MapOfLocation(vertexes, edges);
+}
+
+MapOfLocation initMap(char *filename) {
+    char default_name[] = "GraphList.txt";
+    if (filename == nullptr) { filename = default_name; }
+    std::ifstream file(filename);
+
+    if (file.is_open())
+        return readMap(file);
+    else
+        return {};
+}
