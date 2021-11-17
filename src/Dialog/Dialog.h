@@ -7,6 +7,9 @@
 
 #include "Graph.h"
 #include "MapOfLocation.h"
+#include "Order.h"
+#include "logic.h"
+#include "LabTools.h"
 
 MapOfLocation initMap(char *filename);
 

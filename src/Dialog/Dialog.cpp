@@ -6,7 +6,6 @@
 #include <fstream>
 #include <vector>
 #include "Dialog.h"
-#include "LabTools.h"
 
 void readVer(std::istream &input, std::vector<Graph::Vertex> &vertexes) {
     char c;

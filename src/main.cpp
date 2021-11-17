@@ -1,7 +1,6 @@
 #include <iostream>
-#include "Graph.h"
-#include "MapOfLocation.h"
-#include "logic.h"
+#include "Dialog.h"
+
 
 /*
  *     vector<Graph::Vertex> vertexes =
@@ -22,6 +21,11 @@
     };
 
  *
+ * vector<MapOfLocation::Vertex> way = map.FindShortestWay(Graph::Vertex(0), Graph::Vertex(1));
+    printWay(way);
+
+    way = map.FindShortestWay(Graph::Vertex(1), Graph::Vertex(0));
+    printWay(way);
  */
 
 void printWay(std::vector<MapOfLocation::Vertex> &way) {
@@ -38,13 +42,35 @@ int main(int argc, char* argv[]) {
         filename = argv[1];
 
     MapOfLocation map = initMap(filename);
-    cout << map;
+    vector<Order> order;
+    int id_WH = 0;
 
-    vector<MapOfLocation::Vertex> way = map.FindShortestWay(Graph::Vertex(0), Graph::Vertex(1));
-    printWay(way);
 
-    way = map.FindShortestWay(Graph::Vertex(1), Graph::Vertex(0));
-    printWay(way);
+    int rc;
+    while ((rc = dialog()) != 0) {
+        switch(rc)
+        {
+            case 1:
+                setMap(map);//настроить граф
+                break;
+            case 2:
+                cout << map;//вывести граф
+                break;
+            case 3:
+                cout << "Enter id warehouse: ";//указать id склада
+                getNum(id_WH);
+                break;
+            case 4:
+                //добавить заявки
+                break;
+            case 5:
+                //расчитать маршруты
+                break;
+        }
+        std::cin.get();
+        std::cin.get();
+        system("clear");
+    }
 
     return 0;
 }

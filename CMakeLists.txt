@@ -24,6 +24,7 @@ include_directories(
         Map/MapOfLocation
         Order
         src/Dialog
+        src/logic
         LabTools)
 
 add_executable(task1 ${SOURCES})
