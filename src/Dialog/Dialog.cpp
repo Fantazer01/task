@@ -1,11 +1,12 @@
 //
-// Created by oleg on 15.11.2021.
+// Created by oleg on 17.11.2021.
 //
 
-
-#include "logic.h"
+#include <iostream>
 #include <fstream>
 #include <vector>
+#include "Dialog.h"
+#include "LabTools.h"
 
 void readVer(std::istream &input, std::vector<Graph::Vertex> &vertexes) {
     char c;
@@ -49,7 +50,6 @@ Graph readGraph(std::istream &input) {
     vector<Graph::Edge> edges;
 
     readVer(input, vertexes);
-
     readEdge(input, edges);
 
     return Graph(vertexes, edges);
@@ -72,7 +72,6 @@ MapOfLocation readMap(std::istream &input) {
     vector<Graph::Edge> edges;
 
     readVer(input, vertexes);
-
     readEdge(input, edges);
 
     return MapOfLocation(vertexes, edges);
@@ -87,4 +86,40 @@ MapOfLocation initMap(char *filename) {
         return readMap(file);
     else
         return {};
+}
+
+int menu() {
+    const char *menu_msgs[] =
+            {
+                    "1. Настроить граф",
+                    "2. Вывести граф",
+                    "3. Указать id склада",
+                    "4. Добавить заявку",
+                    "5. Расчитать маршруты",
+                    "0. Выход"
+            };
+
+    const int size_menu_msgs = sizeof(menu_msgs) / sizeof(*menu_msgs);
+
+    for(auto & menu_msg : menu_msgs)
+        std::cout << menu_msg << std::endl;
+
+    return size_menu_msgs;
+}
+
+int dialog() {
+    int numOfStations, rc;
+
+    numOfStations = menu();
+
+    do {
+        try{
+            getNum(rc);
+        } catch (const char err[]) {
+            std::cout << "End of file" << std::endl;
+            return 0;
+        }
+    } while(rc > numOfStations || rc < 0);
+    system("clear");
+    return rc;
 }
