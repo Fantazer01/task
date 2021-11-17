@@ -8,7 +8,6 @@
 #include "Graph.h"
 #include "MapOfLocation.h"
 
-Graph initGraph(char *filename);
 MapOfLocation initMap(char *filename);
 
 int dialog();

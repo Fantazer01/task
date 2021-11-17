@@ -55,35 +55,13 @@ Graph readGraph(std::istream &input) {
     return Graph(vertexes, edges);
 }
 
-Graph initGraph(char *filename) {
-    char default_name[] = "GraphList.txt";
-    if (filename == nullptr) { filename = default_name; }
-    std::ifstream file(filename);
-
-    if (file.is_open())
-        return readGraph(file);
-    else
-        return {};
-}
-
-MapOfLocation readMap(std::istream &input) {
-    using namespace std;
-    vector<Graph::Vertex> vertexes;
-    vector<Graph::Edge> edges;
-
-    readVer(input, vertexes);
-    readEdge(input, edges);
-
-    return MapOfLocation(vertexes, edges);
-}
-
 MapOfLocation initMap(char *filename) {
     char default_name[] = "GraphList.txt";
     if (filename == nullptr) { filename = default_name; }
     std::ifstream file(filename);
 
     if (file.is_open())
-        return readMap(file);
+        return MapOfLocation(readGraph(file));
     else
         return {};
 }
