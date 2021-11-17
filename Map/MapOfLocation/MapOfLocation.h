@@ -28,6 +28,7 @@ private:
 public:
     MapOfLocation() = default;
     MapOfLocation(const std::vector<Vertex> &_vertexes, const std::vector<Edge> &_signature);
+    MapOfLocation(const Graph &graph);
 
     std::vector<Vertex> FindShortestWay(const Vertex &ver1, const Vertex &ver2);
 

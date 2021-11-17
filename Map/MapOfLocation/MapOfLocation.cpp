@@ -85,6 +85,17 @@ MapOfLocation::MapOfLocation(const std::vector<Vertex> &_vertexes, const std::ve
 
 }
 
+MapOfLocation::MapOfLocation(const Graph &graph) : Graph(graph) {
+    unsigned int size = vertexes.size();
+    int start = 0;
+    std::vector <WayDescription> FoundWays;
+
+    for (int i = 0; i < size; ++i) {
+        FoundWays = findShortWays(vertexes[i].second);
+        for (int j = 0; j < FoundWays.size(); ++j) { tableOfShortestWay[start++] = FoundWays[j]; }
+    }
+}
+
 void MapOfLocation::WayDescription::reverse() {
     int size = way.size();
     std::swap(from, to);

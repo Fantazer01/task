@@ -3,11 +3,14 @@ project(task1)
 
 set(CMAKE_CXX_STANDARD 14)
 
-set(SOURCES ${CMAKE_CURRENT_SOURCE_DIR}/src/main.cpp
-        Map/Graph/Graph.cpp
-        Map/MapOfLocation/MapOfLocation.cpp
-        Map/PriorityQueue/PriorityQueue.cpp
-        src/logic.cpp)
+set(SOURCES src/main.cpp
+            src/logic/logic.cpp
+            src/Dialog/Dialog.cpp
+            LabTools/LabTools.cpp
+            Map/Graph/Graph.cpp
+            Map/MapOfLocation/MapOfLocation.cpp
+            Map/PriorityQueue/PriorityQueue.cpp
+            Order/Order.cpp)
 
 include_directories(Map/PriorityQueue)
 
@@ -19,7 +22,9 @@ include_directories(
         Map/PriorityQueue
         Map/Graph
         Map/MapOfLocation
-)
+        Order
+        src/Dialog
+        LabTools)
 
 add_executable(task1 ${SOURCES})
 
