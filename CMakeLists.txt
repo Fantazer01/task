@@ -8,6 +8,7 @@ set(SOURCES src/main.cpp
             src/Dialog/Dialog.cpp
             LabTools/LabTools.cpp
             Map/Graph/Graph.cpp
+            Map/WayDescription/WayDescription.cpp
             Map/MapOfLocation/MapOfLocation.cpp
             Map/PriorityQueue/PriorityQueue.cpp
             Order/Order.cpp
@@ -23,6 +24,7 @@ add_subdirectory(Map/PriorityQueue)
 include_directories(
         Map/PriorityQueue
         Map/Graph
+        Map/WayDescription
         Map/MapOfLocation
         Order
         Truck

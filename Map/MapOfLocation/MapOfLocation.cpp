@@ -3,7 +3,6 @@
 //
 
 #include "MapOfLocation.h"
-#include <iostream>
 #include <list>
 
 
@@ -16,7 +15,7 @@ void MapOfLocation::initializationParameters(std::pair<int, int> *setOfVertexes,
     }
 }
 
-std::vector<MapOfLocation::WayDescription> MapOfLocation::findShortWays(const int &index_vertex) {
+std::vector<WayDescription> MapOfLocation::findShortWays(const int &index_vertex) {
     using namespace std;
 
     vector<WayDescription> ways(vertexes.size());//вектор самых коротких путей от вершины, индекс которой передается, до каждой другой вершины
@@ -46,7 +45,7 @@ std::vector<MapOfLocation::WayDescription> MapOfLocation::findShortWays(const in
         }
     }
 
-    int pred_temp = -1;
+    int pred_temp;
 
     for (int i = 0; i < vertexes.size(); ++i) {
         ways[i].from = index_vertex;
@@ -97,15 +96,7 @@ MapOfLocation::MapOfLocation(const Graph &graph) : Graph(graph), tableOfShortest
 
 }
 
-void MapOfLocation::WayDescription::reverse() {
-    int size = way.size();
-    std::swap(from, to);
-
-    for (int i = 0; i < size/2; ++i)
-        std::swap(way[i], way[size - i - 1]);
-}
-
-MapOfLocation::WayDescription MapOfLocation::ShortestWayFromTo(int &from, int &to) {
+WayDescription MapOfLocation::ShortestWayFromTo(int &from, int &to) {
     //возвращает запись из таблицы, где хранятся уже готовые заготовки путей
     int min = std::min(from, to);
     int max = std::max(from, to);

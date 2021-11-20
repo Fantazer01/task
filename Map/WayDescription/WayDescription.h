@@ -6,14 +6,16 @@
 #define TASK1_WAYDESCRIPTION_H
 
 
+#include <vector>
+
 struct WayDescription {
 public:
-    struct WayDescription {
-        unsigned int from;
-        unsigned int to;
-        std::vector<unsigned int> way;
-        void reverse();
-    };
+    unsigned int from;
+    unsigned int to;
+    std::vector<unsigned int> way;
+
+    void reverse();
+
 };
 
 

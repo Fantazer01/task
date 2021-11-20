@@ -6,18 +6,11 @@
 #define TASK1_MAPOFLOCATION_H
 
 #include "Graph.h"
+#include "WayDescription.h"
 #include "PriorityQueue.h"
 #include <exception>
 
 class MapOfLocation: public Graph {
-public:
-    struct WayDescription {
-        int from;
-        int to;
-        std::vector<int> way;
-        void reverse();
-        //friend std::ostream& operator << (std::ostream&, const WayDescription &);
-    };
 private:
     //таблица кратчайших путей
     std::vector<WayDescription> tableOfShortestWay;
