@@ -5,6 +5,8 @@
 #ifndef TASK1_ORDER_H
 #define TASK1_ORDER_H
 
+#include <iostream>
+
 
 class Order {
 private:
@@ -20,8 +22,13 @@ public:
     void setId(unsigned int _id) { id = _id; }
     void setNumber(int _number) { number = _number; }
 
+    void add(int _number) { number += _number; }
+
     Order& operator ++() { ++number; return *this; }
     const Order operator ++(int) { Order temp(*this); ++id; return temp; }
+
+    friend std::istream& operator >> (std::istream&, Order &);
+    friend std::ostream& operator << (std::ostream&, const Order &);
 
 };
 
