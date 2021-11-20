@@ -10,7 +10,9 @@ set(SOURCES src/main.cpp
             Map/Graph/Graph.cpp
             Map/MapOfLocation/MapOfLocation.cpp
             Map/PriorityQueue/PriorityQueue.cpp
-            Order/Order.cpp)
+            Order/Order.cpp
+            Truck/Truck.cpp
+)
 
 include_directories(Map/PriorityQueue)
 
@@ -23,9 +25,11 @@ include_directories(
         Map/Graph
         Map/MapOfLocation
         Order
+        Truck
         src/Dialog
         src/logic
-        LabTools)
+        LabTools
+)
 
 add_executable(task1 ${SOURCES})
 
