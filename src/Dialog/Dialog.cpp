@@ -3,9 +3,49 @@
 //
 
 #include <iostream>
-#include <fstream>
+#include <iomanip>
+#include <limits>
 #include <vector>
 #include "Dialog.h"
+
+int menu() {
+    const char *menu_msgs[] =
+            {
+                    "1. Настроить граф",
+                    "2. Вывести граф",
+                    "3. Указать id склада",
+                    "4. Вывести id склада",
+                    "5. Добавить заявку",
+                    "6. Вывести список заявок",
+                    "7. Расчитать маршруты",
+                    "0. Выход"
+            };
+
+    const int size_menu_msgs = sizeof(menu_msgs) / sizeof(*menu_msgs);
+
+    for(auto & menu_msg : menu_msgs)
+        std::cout << menu_msg << std::endl;
+
+    return size_menu_msgs;
+}
+
+int dialog() {
+    int numOfStations, rc;
+
+    //system("clear");
+    numOfStations = menu();
+
+    do {
+        try{
+            getNum(rc);
+        } catch (const char err[]) {
+            std::cout << "End of file" << std::endl;
+            return 0;
+        }
+    } while(rc > numOfStations || rc < 0);
+    //system("clear");
+    return rc;
+}
 
 void readVer(std::istream &input, std::vector<Graph::Vertex> &vertexes) {
     char c;
@@ -65,38 +105,48 @@ MapOfLocation initMap(char *filename) {
         return {};
 }
 
-int menu() {
-    const char *menu_msgs[] =
-            {
-                    "1. Настроить граф",
-                    "2. Вывести граф",
-                    "3. Указать id склада",
-                    "4. Добавить заявку",
-                    "5. Расчитать маршруты",
-                    "0. Выход"
-            };
+void setMap(MapOfLocation &map) {
+    char filename[81];
+    std::cout << "Enter name file, where you want to read graph: ";
+    std::cin >> std::setw(81) >> filename;
+    std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
 
-    const int size_menu_msgs = sizeof(menu_msgs) / sizeof(*menu_msgs);
+    std::ifstream file(filename);
 
-    for(auto & menu_msg : menu_msgs)
-        std::cout << menu_msg << std::endl;
-
-    return size_menu_msgs;
+    if (file.is_open()) {
+        map = MapOfLocation(readGraph(file));
+        std::cout << "File was read successfully" << std::endl;
+    } else
+        std::cout << "File isn't found" << std::endl;
 }
 
-int dialog() {
-    int numOfStations, rc;
+void addOrder(std::list<Order> &orders) {
+    int id, num;
 
-    numOfStations = menu();
+    std::cout << "Enter order data (id point and number of one): ";
+    getNum(id);
+    getNum(num);
 
-    do {
-        try{
-            getNum(rc);
-        } catch (const char err[]) {
-            std::cout << "End of file" << std::endl;
-            return 0;
+    Order order(id, num);
+
+    std::list<Order>::iterator p;
+
+    for (p = orders.begin(); p != orders.end(); ++p)
+        if (order.getId() == p->getId()) {
+            p->add(order.getNumber());
+            return;
         }
-    } while(rc > numOfStations || rc < 0);
-    system("clear");
-    return rc;
+
+    orders.push_back(order);
 }
+
+void printOrders(const std::list<Order> &orders) {
+    std::cout << "List of orders (id point and number of one):\n";
+    for (const Order &a : orders)
+        std::cout << a << std::endl;
+}
+
+void calculateRoute(const MapOfLocation &map, const std::list<Order> &orders, const int &id_WH) {
+
+}
+

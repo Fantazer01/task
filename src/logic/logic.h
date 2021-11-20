@@ -7,7 +7,7 @@
 
 #include "MapOfLocation.h"
 
-void setMap(MapOfLocation &map);
+void printWay(std::vector<MapOfLocation::Vertex> &way);
 
 
 
