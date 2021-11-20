@@ -5,6 +5,7 @@
 #include <iostream>
 #include <iomanip>
 #include <limits>
+#include <string>
 #include <vector>
 #include "Dialog.h"
 
@@ -31,18 +32,21 @@ int menu() {
 
 int dialog() {
     int numOfStations, rc;
+    std::string err_msg = "";
 
     //system("clear");
     numOfStations = menu();
 
     do {
+        std::cout << err_msg;
+        err_msg = "enter the number corresponding to one of the menu items\n";
         try{
             getNum(rc);
         } catch (const char err[]) {
             std::cout << "End of file" << std::endl;
             return 0;
         }
-    } while(rc > numOfStations || rc < 0);
+    } while(rc >= numOfStations || rc < 0);
     //system("clear");
     return rc;
 }
@@ -142,6 +146,12 @@ void addOrder(std::list<Order> &orders) {
 
 void printOrders(const std::list<Order> &orders) {
     std::cout << "List of orders (id point and number of one):\n";
+
+    if (orders.size() == 0) {
+        std::cout << "Empty" << std::endl;
+        return;
+    }
+
     for (const Order &a : orders)
         std::cout << a << std::endl;
 }
