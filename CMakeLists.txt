@@ -13,6 +13,7 @@ set(SOURCES src/main.cpp
             Map/PriorityQueue/PriorityQueue.cpp
             Order/Order.cpp
             Truck/Truck.cpp
+            Route/Route.cpp
 )
 
 include_directories(Map/PriorityQueue)
@@ -28,6 +29,7 @@ include_directories(
         Map/MapOfLocation
         Order
         Truck
+        Route
         src/Dialog
         src/logic
         LabTools
