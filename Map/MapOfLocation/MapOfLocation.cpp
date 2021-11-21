@@ -61,8 +61,10 @@ std::vector<WayDescription> MapOfLocation::findShortWays(const int &index_vertex
 
         ways[i].way.resize(way_list.size());
         int j = 0;
-        for (int index : way_list)
-            ways[i].way[++j] = index;
+        for (int index : way_list) {
+            ways[i].way[j] = index;
+            ++j;
+        }
 
         way_list.clear();
     }
@@ -111,23 +113,27 @@ WayDescription MapOfLocation::ShortestWayFromTo(int &from, int &to) const {
     return {};
 }
 
-WayDescription MapOfLocation::FindShortestWay(const Graph::Vertex &ver1, const Graph::Vertex &ver2) const {
-    int index1(findVertex(ver1)), index2(findVertex(ver2));
-    WayDescription VertexPath(ver1.getName(), ver2.getName());
+WayDescription MapOfLocation::FindShortestWay(const Graph::Vertex &ver_from, const Graph::Vertex &ver_to) const {
+    int index_from(findVertex(ver_from)), index_to(findVertex(ver_to));
+    WayDescription WayGlobalID(ver_from.getName(), ver_to.getName());
 
-    if (index1 == -1 || index2 == -1)
-        return VertexPath;
+    if (index_from == -1 || index_to == -1)
+        return WayGlobalID;
 
-    WayDescription wayDesc = ShortestWayFromTo(index1, index2);
+    WayDescription WayLocalID = ShortestWayFromTo(index_from, index_to);
+    WayGlobalID.way.resize(WayLocalID.way.size());
 
-    VertexPath.way.resize(wayDesc.way.size());
+    for (int i = 0; i < WayLocalID.way.size(); ++i)
+        WayGlobalID.way[i] = vertexes[WayLocalID.way[i]].first.getName();
 
-    for (int i = 0; i < wayDesc.way.size(); ++i)
-        VertexPath.way[i] = vertexes[wayDesc.way[i]].first.getName();
+    WayGlobalID.dist = WayLocalID.dist;
 
-    VertexPath.dist = wayDesc.dist;
+    return WayGlobalID;
+}
 
-    return VertexPath;
+void MapOfLocation::answerOnYourQuestion() const {
+    for (auto a : tableOfShortestWay)
+        std::cout << a;
 }
 
 
