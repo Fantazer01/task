@@ -40,7 +40,7 @@ int main(int argc, char* argv[]) {
                 printOrders(orders);//вывести заявки
                 break;
             case 7:
-                calculateRoute(map, id_WH, orders, trucks);//расчитать маршруты
+                calculatePrintRoutes(map, id_WH, orders, trucks);//расчитать маршруты
                 break;
         }
         std::cin.get();
