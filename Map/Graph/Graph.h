@@ -33,21 +33,24 @@ public:
     };
 
 private:
+    unsigned int numVer;
     int **signature;//signature
 protected:
     std::vector<std::pair<Vertex, int>> vertexes;//vertexes
 
     //helper methods
-    void initialization(const unsigned int &size, const std::vector<Edge> &_signature);
+    void initialization(const std::vector<Edge> &_signature);
     int distBetweenVertexes(const int &index1, const int &index2);
     int findVertex(const Vertex &ver) const;
     Vertex getVertex(const int &index);
 public:
-    Graph():signature(nullptr) {}
+    Graph(): numVer(0), signature(nullptr) {}
     Graph(const std::vector<Vertex> &_vertexes, const std::vector<Edge> &_signature);
     Graph(const Graph &graph);
     Graph(Graph && graph) noexcept ;
     ~Graph();
+
+    unsigned int getNumVer() { return numVer; }
 
     Graph& operator = (const Graph &);
 

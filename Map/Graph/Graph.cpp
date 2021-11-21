@@ -34,14 +34,14 @@ Graph::Vertex Graph::getVertex(const int &index) {
     throw std::invalid_argument("vertex don't exist");
 }
 
-void Graph::initialization(const unsigned int &size, const std::vector<Edge> &_signature) {
+void Graph::initialization(const std::vector<Edge> &_signature) {
     int i, j;
 
-    signature = new int*[size];
+    signature = new int*[numVer];
 
-    for (i = 0; i < size; ++i) {
-        signature[i] = new int[size - i];
-        for (j = 0; j < size - i; ++j)
+    for (i = 0; i < numVer; ++i) {
+        signature[i] = new int[numVer - i];
+        for (j = 0; j < numVer - i; ++j)
             if (i == j + i)
                 signature[i][j] = 0;
             else
@@ -58,46 +58,40 @@ void Graph::initialization(const unsigned int &size, const std::vector<Edge> &_s
     }
 }
 
-Graph::Graph(const std::vector<Vertex> &_vertexes, const std::vector<Edge> &_signature): vertexes(_vertexes.size()) {
-    for (int i = 0; i < vertexes.size(); ++i)
+Graph::Graph(const std::vector<Vertex> &_vertexes, const std::vector<Edge> &_signature): numVer(_vertexes.size()), vertexes(numVer) {
+    for (int i = 0; i < numVer; ++i)
         vertexes[i] = std::pair<Vertex, int>(_vertexes[i], i);
 
-    initialization(vertexes.size(), _signature);
+    initialization(_signature);
 }
 
-Graph::Graph(const Graph &graph): vertexes(graph.vertexes.size()) {
-    unsigned int size = vertexes.size();
-
-    for (int i = 0; i < size; ++i)
-        vertexes[i] = graph.vertexes[i];
+Graph::Graph(const Graph &graph): numVer(graph.numVer), vertexes(graph.vertexes) {
 
     if (graph.signature != nullptr) {
-        signature = new int*[size];
+        signature = new int*[numVer];
 
-        for (int i = 0; i < size; ++i) {
-            signature[i] = new int[size - i];
-            for (int j = 0; j < size - i; ++j)
+        for (int i = 0; i < numVer; ++i) {
+            signature[i] = new int[numVer - i];
+            for (int j = 0; j < numVer - i; ++j)
                 signature[i][j] = graph.signature[i][j];
         }
     }
 
 }
 
-Graph::Graph(Graph && graph) noexcept: vertexes(std::move(graph.vertexes)), signature(graph.signature) {
+Graph::Graph(Graph && graph) noexcept: numVer(graph.numVer), vertexes(std::move(graph.vertexes)), signature(graph.signature) {
     graph.signature = nullptr;
 }
 
 Graph::~Graph() {
-    unsigned int size = vertexes.size();
-
     if (signature != nullptr)
-        for (int i = 0; i < size; ++i)
+        for (int i = 0; i < numVer; ++i)
             delete [] signature[i];
     delete [] signature;
 }
 
 int Graph::distBetweenVertexes(const int &index1, const int &index2) {
-    if (index1 >= vertexes.size() || index2 >= vertexes.size() || index1 < 0 || index2 < 0)
+    if (index1 >= numVer || index2 >= numVer || index1 < 0 || index2 < 0)
         throw std::invalid_argument("invalid index");
 
     return signature[std::min(index1, index2)][std::max(index1, index2) - std::min(index1, index2)];
@@ -107,25 +101,20 @@ Graph& Graph::operator = (const Graph &graph) {
     if (this == &graph)
         return *this;
 
-    unsigned int size = vertexes.size();
-
     if (signature != nullptr)
-        for (int i = 0; i < size; ++i)
+        for (int i = 0; i < numVer; ++i)
             delete [] signature[i];
     delete [] signature;
 
-    vertexes.resize(graph.vertexes.size());
-    size = graph.vertexes.size();
-
-    for (int i = 0; i < size; ++i)
-        vertexes[i] = graph.vertexes[i];
+    numVer = graph.numVer;
+    vertexes.assign(graph.vertexes.begin(), graph.vertexes.end());
 
     if (graph.signature != nullptr) {
-        signature = new int*[size];
+        signature = new int*[numVer];
 
-        for (int i = 0; i < size; ++i) {
-            signature[i] = new int[size - i];
-            for (int j = 0; j < size - i; ++j)
+        for (int i = 0; i < numVer; ++i) {
+            signature[i] = new int[numVer - i];
+            for (int j = 0; j < numVer - i; ++j)
                 signature[i][j] = graph.signature[i][j];
         }
     }
@@ -135,15 +124,14 @@ Graph& Graph::operator = (const Graph &graph) {
 
 std::ostream& operator << (std::ostream& output, Graph &graph) {
     int i, j, k;
-    unsigned int size = graph.vertexes.size();
 
     output << "Vertexes:" << std::endl;
-    for (i = 0; i < size; ++i)
+    for (i = 0; i < graph.numVer; ++i)
         output << "global id: " << graph.vertexes[i].first << ", local id: " << graph.vertexes[i].second<< std::endl;
 
-    for (i = 0; i < size; ++i) {
+    for (i = 0; i < graph.numVer; ++i) {
         output << "signature(" << graph.getVertex(i) << "[" << i << "]): ";
-        for (j = 0, k = 0; j < size; ++j) {
+        for (j = 0, k = 0; j < graph.numVer; ++j) {
             if (graph.distBetweenVertexes(i, j) != -1 && i != j) {
                 output << j << "(" << graph.distBetweenVertexes(i, j) << ") ";
                 ++k;
