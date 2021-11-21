@@ -13,6 +13,7 @@ public:
     unsigned int from;
     unsigned int to;
     std::vector<unsigned int> way;
+    unsigned int dist;
 
     void reverse();
 
