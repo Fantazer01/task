@@ -24,7 +24,7 @@ int main(int argc, char* argv[]) {
                 setMap(map);//настроить граф
                 break;
             case 2:
-                cout << map;//вывести граф
+                putGraph(map);//вывести граф
                 break;
             case 3:
                 cout << "Enter id warehouse: ";//указать id склада
