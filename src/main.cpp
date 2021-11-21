@@ -5,11 +5,14 @@
 int main(int argc, char* argv[]) {
     using namespace std;
 
-    char *filename = nullptr;
-    if (argc > 1)
-        filename = argv[1];
+    MapOfLocation map = initMap(argc, argv);
 
-    MapOfLocation map = initMap(filename);
+    vector<Truck> trucks = {
+            {0, 8, 10},
+            {1, 8, 10},
+            {2, 8, 10}
+    };
+
     list<Order> orders;
     int id_WH = 0;
 
@@ -37,7 +40,7 @@ int main(int argc, char* argv[]) {
                 printOrders(orders);//вывести заявки
                 break;
             case 7:
-                calculateRoute(map, orders, id_WH);//расчитать маршруты
+                calculateRoute(map, id_WH, orders, trucks);//расчитать маршруты
                 break;
         }
         std::cin.get();
