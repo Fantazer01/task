@@ -50,7 +50,7 @@ public:
     Graph(Graph && graph) noexcept ;
     ~Graph();
 
-    unsigned int getNumVer() { return numVer; }
+    unsigned int getNumVer() const { return numVer; }
 
     Graph& operator = (const Graph &);
 
