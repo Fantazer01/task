@@ -42,7 +42,7 @@ protected:
     void initialization(const std::vector<Edge> &_signature);
     int distBetweenVertexes(const int &index1, const int &index2);
     int findVertex(const Vertex &ver) const;
-    Vertex getVertex(const int &index);
+    Vertex getVertex(const int &index) const;
 public:
     Graph(): numVer(0), signature(nullptr) {}
     Graph(const std::vector<Vertex> &_vertexes, const std::vector<Edge> &_signature);
@@ -53,6 +53,8 @@ public:
     unsigned int getNumVer() const { return numVer; }
 
     Graph& operator = (const Graph &);
+
+    std::ostream& put(std::ostream&) const;
 
     friend std::ostream& operator << (std::ostream&, Graph &);
 };

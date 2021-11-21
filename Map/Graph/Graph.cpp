@@ -24,14 +24,12 @@ int Graph::findVertex(const Vertex &ver) const {
     return -1;
 }
 
-Graph::Vertex Graph::getVertex(const int &index) {
-    unsigned int size = vertexes.size();
+Graph::Vertex Graph::getVertex(const int &index) const {
 
-    for (int i = 0; i < size; ++i)
-        if (vertexes[i].second == index)
-            return Vertex(vertexes[i].first);
+    if (vertexes[index].second == index)
+        return Vertex(vertexes[index].first);
 
-    throw std::invalid_argument("vertex don't exist");
+    throw std::invalid_argument("vertex don't exist or indexing error");
 }
 
 void Graph::initialization(const std::vector<Edge> &_signature) {
@@ -120,6 +118,15 @@ Graph& Graph::operator = (const Graph &graph) {
     }
 
     return *this;
+}
+
+std::ostream& Graph::put(std::ostream &output) const {
+    for (int i = 0; i < numVer; ++i)
+        for (int j = 0; j < numVer - i; ++j)
+            if (signature[i][j] > 0)
+                output << getVertex(i) << "--" << getVertex(j+i) << "\n";
+
+    return output;
 }
 
 std::ostream& operator << (std::ostream& output, Graph &graph) {
