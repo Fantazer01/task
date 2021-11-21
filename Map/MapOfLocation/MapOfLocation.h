@@ -17,13 +17,13 @@ private:
     //helper methods
     void initializationParameters(std::pair<int, int> *setOfVertexes, int *pred, int *distance);
     std::vector<WayDescription> findShortWays(const int &index_vertex);
-    WayDescription ShortestWayFromTo(int &from, int &to);
+    WayDescription ShortestWayFromTo(int &from, int &to) const;
 public:
     MapOfLocation() = default;
     MapOfLocation(const std::vector<Vertex> &_vertexes, const std::vector<Edge> &_signature);
     MapOfLocation(const Graph &graph);
 
-    WayDescription FindShortestWay(const Vertex &ver1, const Vertex &ver2);
+    WayDescription FindShortestWay(const Vertex &ver1, const Vertex &ver2) const;
 
 
 };

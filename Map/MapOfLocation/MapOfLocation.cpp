@@ -53,16 +53,16 @@ std::vector<WayDescription> MapOfLocation::findShortWays(const int &index_vertex
         list<int> way_list;
         for (pred_temp = i; pred_temp != -1; pred_temp = pred[pred_temp]) {
             way_list.push_back(pred_temp);
+            if (pred[pred_temp] != -1)
+                ways[i].dist += distBetweenVertexes(pred_temp, pred[pred_temp]);
         }
 
         way_list.reverse();
 
         ways[i].way.resize(way_list.size());
         int j = 0;
-        for (int index : way_list) {
-            ways[i].way[j] = index;
-            ++j;
-        }
+        for (int index : way_list)
+            ways[i].way[++j] = index;
 
         way_list.clear();
     }
@@ -96,7 +96,7 @@ MapOfLocation::MapOfLocation(const Graph &graph) : Graph(graph), tableOfShortest
 
 }
 
-WayDescription MapOfLocation::ShortestWayFromTo(int &from, int &to) {
+WayDescription MapOfLocation::ShortestWayFromTo(int &from, int &to) const {
     //возвращает запись из таблицы, где хранятся уже готовые заготовки путей
     int min = std::min(from, to);
     int max = std::max(from, to);
@@ -111,7 +111,7 @@ WayDescription MapOfLocation::ShortestWayFromTo(int &from, int &to) {
     return {};
 }
 
-WayDescription MapOfLocation::FindShortestWay(const Graph::Vertex &ver1, const Graph::Vertex &ver2) {
+WayDescription MapOfLocation::FindShortestWay(const Graph::Vertex &ver1, const Graph::Vertex &ver2) const {
     int index1(findVertex(ver1)), index2(findVertex(ver2));
     WayDescription VertexPath(ver1.getName(), ver2.getName());
 
@@ -124,6 +124,8 @@ WayDescription MapOfLocation::FindShortestWay(const Graph::Vertex &ver1, const G
 
     for (int i = 0; i < wayDesc.way.size(); ++i)
         VertexPath.way[i] = vertexes[wayDesc.way[i]].first.getName();
+
+    VertexPath.dist = wayDesc.dist;
 
     return VertexPath;
 }
