@@ -7,6 +7,7 @@
 
 
 #include <vector>
+#include <iostream>
 
 struct WayDescription {
 public:
@@ -20,6 +21,7 @@ public:
 
     void reverse();
 
+    friend std::ostream& operator << (std::ostream&, const WayDescription &);
 };
 
 
