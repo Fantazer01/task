@@ -7,7 +7,7 @@
 
 
 void MapOfLocation::initializationParameters(std::pair<int, int> *setOfVertexes, int *pred, int *distance) {
-    for (int i = 0; i < vertexes.size(); ++i) {
+    for (int i = 0; i < getNumVer(); ++i) {
         setOfVertexes[i].first = vertexes[i].second;
         setOfVertexes[i].second = -1;
         pred[i] = -1;
@@ -18,15 +18,15 @@ void MapOfLocation::initializationParameters(std::pair<int, int> *setOfVertexes,
 std::vector<WayDescription> MapOfLocation::findShortWays(const int &index_vertex) {
     using namespace std;
 
-    vector<WayDescription> ways(vertexes.size());//вектор самых коротких путей от вершины, индекс которой передается, до каждой другой вершины
+    vector<WayDescription> ways(getNumVer());//вектор самых коротких путей от вершины, индекс которой передается, до каждой другой вершины
     //заготовка для алгоритма Дейкстры
-    pair<int, int> setOfVertexes[vertexes.size()];//first - index, second - distance
-    int pred[vertexes.size()];
-    int distance[vertexes.size()];
+    pair<int, int> setOfVertexes[getNumVer()];//first - index, second - distance
+    int pred[getNumVer()];
+    int distance[getNumVer()];
     pair<int, int> curVer;
 
     initializationParameters(setOfVertexes, pred, distance);
-    PriorityQueue queue(vertexes.size(), setOfVertexes);
+    PriorityQueue queue(getNumVer(), setOfVertexes);
     queue.decreaseKey(index_vertex, 0);
 
 
@@ -34,7 +34,7 @@ std::vector<WayDescription> MapOfLocation::findShortWays(const int &index_vertex
         curVer = queue.extractMim();
         distance[curVer.first] = curVer.second;
 
-        for (int i = 0; i < vertexes.size(); ++i) {
+        for (int i = 0; i < getNumVer(); ++i) {
             if (distBetweenVertexes(curVer.first, i) < 0)
                 continue;
             if (distance[i] < 0 || distance[i] > distBetweenVertexes(curVer.first, i) + distance[curVer.first]) {
@@ -47,7 +47,7 @@ std::vector<WayDescription> MapOfLocation::findShortWays(const int &index_vertex
 
     int pred_temp;
 
-    for (int i = 0; i < vertexes.size(); ++i) {
+    for (int i = 0; i < getNumVer(); ++i) {
         ways[i].from = index_vertex;
         ways[i].to = i;
         list<int> way_list;
@@ -73,7 +73,7 @@ std::vector<WayDescription> MapOfLocation::findShortWays(const int &index_vertex
 
 MapOfLocation::MapOfLocation(const std::vector<Vertex> &_vertexes, const std::vector<Edge> &_signature)
         :Graph(_vertexes, _signature), tableOfShortestWay(_vertexes.size()*_vertexes.size()) {
-    unsigned int size = vertexes.size();
+    unsigned int size = getNumVer();
     int start = 0;
     std::vector <WayDescription> FoundWays;
 
@@ -85,7 +85,7 @@ MapOfLocation::MapOfLocation(const std::vector<Vertex> &_vertexes, const std::ve
 }
 
 MapOfLocation::MapOfLocation(const Graph &graph) : Graph(graph), tableOfShortestWay(vertexes.size()*vertexes.size()) {
-    unsigned int size = vertexes.size();
+    unsigned int size = getNumVer();
     int start = 0;
     std::vector <WayDescription> FoundWays;
 
@@ -111,19 +111,19 @@ WayDescription MapOfLocation::ShortestWayFromTo(int &from, int &to) {
     return {};
 }
 
-std::vector<MapOfLocation::Vertex> MapOfLocation::FindShortestWay(const Graph::Vertex &ver1, const Graph::Vertex &ver2) {
-    std::vector<Vertex> VertexPath;
+WayDescription MapOfLocation::FindShortestWay(const Graph::Vertex &ver1, const Graph::Vertex &ver2) {
     int index1(findVertex(ver1)), index2(findVertex(ver2));
+    WayDescription VertexPath(ver1.getName(), ver2.getName());
 
     if (index1 == -1 || index2 == -1)
         return VertexPath;
 
     WayDescription wayDesc = ShortestWayFromTo(index1, index2);
 
-    VertexPath.resize(wayDesc.way.size());
+    VertexPath.way.resize(wayDesc.way.size());
 
     for (int i = 0; i < wayDesc.way.size(); ++i)
-        VertexPath[i] = vertexes[wayDesc.way[i]].first;
+        VertexPath.way[i] = vertexes[wayDesc.way[i]].first.getName();
 
     return VertexPath;
 }

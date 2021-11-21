@@ -15,6 +15,9 @@ public:
     std::vector<unsigned int> way;
     unsigned int dist;
 
+    WayDescription(): from(0), to(0), dist(0) {}
+    WayDescription(unsigned int _from, unsigned int _to): from(_from), to(_to), dist(0) {}
+
     void reverse();
 
 };
