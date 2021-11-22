@@ -17,7 +17,6 @@ std::ostream& operator << (std::ostream& output, const WayDescription &way) {
         for (unsigned int point : way.way)
             output << point << " ";
         output << "dist: " << way.dist;
-        output << std::endl;
 
         return output;
 }

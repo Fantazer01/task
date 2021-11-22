@@ -98,9 +98,13 @@ Graph readGraph(std::istream &input) {
     return Graph(vertexes, edges);
 }
 
-MapOfLocation initMap(char *filename) {
+MapOfLocation initMap(const int &argc, char* argv[]) {
     char default_name[] = "GraphList.txt";
-    if (filename == nullptr) { filename = default_name; }
+    char *filename = default_name;
+
+    if (argc > 1)
+        filename = argv[1];
+
     std::ifstream file(filename);
 
     if (file.is_open())
@@ -122,6 +126,17 @@ void setMap(MapOfLocation &map) {
         std::cout << "File was read successfully" << std::endl;
     } else
         std::cout << "File isn't found" << std::endl;
+}
+
+void putGraph(MapOfLocation &map) {
+    std::cout << map;
+
+    std::ofstream file("putGraph.gv");
+    file << "graph G {\n";
+    map.put(file);
+    file << "}\n";
+    file.close();
+    system("dot -Tpng putGraph.gv -o picture.png && sxiv picture.png");
 }
 
 void addOrder(std::list<Order> &orders) {
@@ -156,7 +171,33 @@ void printOrders(const std::list<Order> &orders) {
         std::cout << a << std::endl;
 }
 
-void calculateRoute(const MapOfLocation &map, const std::list<Order> &orders, const int &id_WH) {
+void calculatePrintRoutes
+    (const MapOfLocation &Map, const int &id_WH, std::list<Order> orders, const std::vector<Truck> &trucks) {
+    std::list<Route> routes;
+    std::list<Truck> unoccupiedTrucks;
+    Route route;
+    int counter = 0;
+
+    for (const Truck &a : trucks)
+        unoccupiedTrucks.push_back(a);
+
+    //std::cout << "\ninfo\n\n";
+    while (!orders.empty() && !unoccupiedTrucks.empty()) {
+        routes.push_back(calculateRoute(counter, Map, id_WH, orders, unoccupiedTrucks));
+        ++counter;
+    }
+
+    /*
+    for (Route a : routes) {
+        std::cout << "id: " << a.getId() << ", id of truck: " << a.getIdTruck() << " \nways:\n";
+        std::list<std::pair<WayDescription, Order>> b = a.getWays();
+        for (auto c : b) {
+            std::cout << c.first;
+        }
+        std::cout << "\nnew\n";
+    }
+     */
+    //std::cout << "\n\ninfo\n\n";
 
 }
 

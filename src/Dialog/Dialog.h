@@ -7,6 +7,9 @@
 
 #include "MapOfLocation.h"
 #include "Order.h"
+#include "Truck.h"
+#include "Route.h"
+
 #include "logic.h"
 #include "LabTools.h"
 #include <list>
@@ -14,12 +17,13 @@
 
 int dialog();
 
-MapOfLocation initMap(char *filename);
+MapOfLocation initMap(const int &argc, char* argv[]);
 void setMap(MapOfLocation &map);
+void putGraph(MapOfLocation &map);
 
 void addOrder(std::list<Order> &);
 void printOrders(const std::list<Order> &);
 
-void calculateRoute(const MapOfLocation &, const std::list<Order> &, const int &);
+void calculatePrintRoutes(const MapOfLocation &, const int &, std::list<Order>, const std::vector<Truck> &);
 
 #endif //TASK1_DIALOG_H

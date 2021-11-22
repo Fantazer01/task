@@ -5,10 +5,10 @@
 #ifndef TASK1_LOGIC_H
 #define TASK1_LOGIC_H
 
-#include "MapOfLocation.h"
+#include "Dialog.h"
 
 void printWay(std::vector<MapOfLocation::Vertex> &way);
-
+Route calculateRoute(int counter, const MapOfLocation &Map, const int &id_WH, std::list<Order> &orders, std::list<Truck> &trucks);
 
 
 
