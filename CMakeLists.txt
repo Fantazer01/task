@@ -16,9 +16,9 @@ set(SOURCES src/main.cpp
             Route/Route.cpp
 )
 
-include_directories(Map/PriorityQueue)
 
 add_subdirectory(Map/PriorityQueue)
+add_subdirectory(Map/Graph)
 
 #set(HEADERS Map/Graph.h)
 
