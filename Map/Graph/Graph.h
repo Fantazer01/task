@@ -17,10 +17,11 @@ public:
     public:
         Vertex():id(0) {}
         explicit Vertex(unsigned int _id): id(_id) {}
-        unsigned int getName() const { return id; }
-        void setName(unsigned int _id) { id = _id; };
+        unsigned int getID() const { return id; }
+        void setID(unsigned int _id) { id = _id; }
 
         bool operator == (const Vertex &ver2) const { return id == ver2.id; }
+        bool operator != (const Vertex &ver2) const { return id != ver2.id; }
 
         friend std::istream& operator >> (std::istream&, Vertex &);
         friend std::ostream& operator << (std::ostream&, const Vertex &);

@@ -115,7 +115,7 @@ WayDescription MapOfLocation::ShortestWayFromTo(int &from, int &to) const {
 
 WayDescription MapOfLocation::FindShortestWay(const Graph::Vertex &ver_from, const Graph::Vertex &ver_to) const {
     int index_from(findVertex(ver_from)), index_to(findVertex(ver_to));
-    WayDescription WayGlobalID(ver_from.getName(), ver_to.getName());
+    WayDescription WayGlobalID(ver_from.getID(), ver_to.getID());
 
     if (index_from == -1 || index_to == -1)
         return WayGlobalID;
@@ -124,7 +124,7 @@ WayDescription MapOfLocation::FindShortestWay(const Graph::Vertex &ver_from, con
     WayGlobalID.way.resize(WayLocalID.way.size());
 
     for (int i = 0; i < WayLocalID.way.size(); ++i)
-        WayGlobalID.way[i] = vertexes[WayLocalID.way[i]].first.getName();
+        WayGlobalID.way[i] = vertexes[WayLocalID.way[i]].first.getID();
 
     WayGlobalID.dist = WayLocalID.dist;
 
