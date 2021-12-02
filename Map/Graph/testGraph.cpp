@@ -50,7 +50,7 @@ TEST(Graph, Vertexes)
     ASSERT_EQ(vertex.size(), graph.getNumVer());
 
     int i;
-    Graph::const_iterator it_graph;
+    Graph::const_iteratorV it_graph;
 
     for (i = 0, it_graph = graph.begin(); it_graph != graph.end(); ++i, ++it_graph)
         ASSERT_EQ(i, it_graph->first.getID());
@@ -76,7 +76,7 @@ TEST(Graph, SignatureInConnectedGraph)
     Graph graph(vertex, signature);
 
     int i, j;
-    Graph::const_iterator it1, it2;
+    Graph::const_iteratorV it1, it2;
 
     for (i = 0, it1 = graph.begin(); it1 != graph.end(); ++i, ++it1)
         for (j = i, it2 = it1; it2 != graph.end(); ++j, ++it2)
@@ -106,7 +106,7 @@ TEST(Graph, SignatureInNoConnectedGraph)
     Graph graph(vertex, signature);
 
     int i, j;
-    Graph::const_iterator it1, it2;
+    Graph::const_iteratorV it1, it2;
 
     for (i = 0, it1 = graph.begin(); it1 != graph.end(); ++i, ++it1)
         for (j = i, it2 = it1; it2 != graph.end(); ++j, ++it2)
