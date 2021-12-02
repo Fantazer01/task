@@ -16,10 +16,6 @@ set(SOURCES src/main.cpp
             Route/Route.cpp
 )
 
-
-add_subdirectory(Map/PriorityQueue)
-add_subdirectory(Map/Graph)
-
 #set(HEADERS Map/Graph.h)
 
 include_directories(
@@ -34,6 +30,10 @@ include_directories(
         src/logic
         LabTools
 )
+
+add_subdirectory(Map/PriorityQueue)
+add_subdirectory(Map/Graph/test)
+add_subdirectory(Map/MapOfLocation)
 
 add_executable(task1 ${SOURCES})
 

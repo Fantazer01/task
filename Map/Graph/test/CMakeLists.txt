@@ -3,8 +3,9 @@ project(testGraph)
 
 set(CMAKE_CXX_STANDARD 14)
 
-set(SOURCES testGraph.cpp
-            Graph.cpp)
+set(SOURCES
+        testGraph.cpp
+        ../Graph.cpp)
 
 
 add_executable(${PROJECT_NAME} ${SOURCES})
