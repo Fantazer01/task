@@ -24,8 +24,7 @@ int Graph::findVertex(const Vertex &ver) const {
     return -1;
 }
 
-Graph::Vertex Graph::getVertex(const int &index) const {
-
+Graph::Vertex Graph::getVertex(const uint &index) const {
     if (vertexes[index].second == index)
         return Vertex(vertexes[index].first);
 
@@ -46,7 +45,8 @@ void Graph::initialization(const std::vector<Edge> &_signature) {
                 signature[i][j] = -1;
     }
 
-    int a, b, n = _signature.size();
+    int a, b;
+    uint n = _signature.size();
 
     for (i = 0; i < n; ++i) {
         a = findVertex(_signature[i].ver1);
@@ -88,8 +88,8 @@ Graph::~Graph() {
     delete [] signature;
 }
 
-int Graph::distBetweenVertexes(const int &index1, const int &index2) {
-    if (index1 >= numVer || index2 >= numVer || index1 < 0 || index2 < 0)
+int Graph::distBetweenVertexes(const uint &index1, const uint &index2) {
+    if (index1 >= numVer || index2 >= numVer)
         throw std::invalid_argument("invalid index");
 
     return signature[std::min(index1, index2)][std::max(index1, index2) - std::min(index1, index2)];
@@ -118,6 +118,32 @@ Graph& Graph::operator = (const Graph &graph) {
     }
 
     return *this;
+}
+
+int Graph::getConnection(const Vertex &ver1, const Vertex &ver2) {
+    int index1, index2;
+    index1 = findVertex(ver1);
+    index2 = findVertex(ver2);
+
+    if (index1 < 0 || index2 < 0)
+        throw std::invalid_argument("invalid index");
+
+    return distBetweenVertexes(index1, index2);
+}
+
+int Graph::getConnection(const uint &id1, const uint &id2) {
+    int index1, index2;
+    index1 = findVertex(Vertex(id1));
+    index2 = findVertex(Vertex(id2));
+
+    if (index1 < 0 || index2 < 0)
+        throw std::invalid_argument("invalid index");
+
+    return distBetweenVertexes(index1, index2);
+}
+
+int Graph::getConnection(const const_iteratorV &it1, const const_iteratorV &it2) {
+    return distBetweenVertexes(it1-vertexes.cbegin(), it2-vertexes.cbegin());
 }
 
 std::ostream& Graph::put(std::ostream &output) const {

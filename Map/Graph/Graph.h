@@ -33,17 +33,20 @@ public:
         int distance;
     };
 
+    typedef std::vector<std::pair<Vertex, uint>>::const_iterator const_iteratorV;
+
 private:
     unsigned int numVer;
     int **signature;//signature
-protected:
-    std::vector<std::pair<Vertex, int>> vertexes;//vertexes
+    std::vector<std::pair<Vertex, uint>> vertexes;//vertexes
 
     //helper methods
     void initialization(const std::vector<Edge> &_signature);
-    int distBetweenVertexes(const int &index1, const int &index2);
+protected:
+    //helper methods
+    int distBetweenVertexes(const uint &index1, const uint &index2);
     int findVertex(const Vertex &ver) const;
-    Vertex getVertex(const int &index) const;
+    Vertex getVertex(const uint &index) const;
 public:
     Graph(): numVer(0), signature(nullptr) {}
     Graph(const std::vector<Vertex> &_vertexes, const std::vector<Edge> &_signature);
@@ -51,9 +54,14 @@ public:
     Graph(Graph && graph) noexcept ;
     ~Graph();
 
-    unsigned int getNumVer() const { return numVer; }
-
     Graph& operator = (const Graph &);
+
+    unsigned int getNumVer() const { return numVer; }
+    const_iteratorV begin() const { return vertexes.cbegin(); }
+    const_iteratorV end() const { return vertexes.cend(); }
+    int getConnection(const Vertex &ver1, const Vertex &ver2);
+    int getConnection(const uint &id1, const uint &id2);
+    int getConnection(const const_iteratorV &it1, const const_iteratorV &it2);
 
     std::ostream& put(std::ostream&) const;
 
