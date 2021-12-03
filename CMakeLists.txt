@@ -6,8 +6,6 @@ set(CMAKE_CXX_STANDARD 14)
 set(SOURCES src/main.cpp
             src/logic/logic.cpp
             src/Dialog/Dialog.cpp
-            LabTools/LabTools.cpp
-            Map/Graph/Graph.cpp
             Map/WayDescription/WayDescription.cpp
             Map/MapOfLocation/MapOfLocation.cpp
             Map/PriorityQueue/PriorityQueue.cpp
@@ -16,7 +14,6 @@ set(SOURCES src/main.cpp
             Route/Route.cpp
 )
 
-#set(HEADERS Map/Graph.h)
 
 include_directories(
         Map/PriorityQueue
@@ -31,10 +28,16 @@ include_directories(
         LabTools
 )
 
+add_subdirectory(LabTools/lib)
 add_subdirectory(Map/PriorityQueue)
 add_subdirectory(Map/Graph/test)
+add_subdirectory(Map/Graph/lib)
 add_subdirectory(Map/MapOfLocation)
 
-add_executable(task1 ${SOURCES})
+add_executable(${PROJECT_NAME} ${SOURCES})
 
-#target_link_libraries(main /usr/lib)
+set(LIB
+        ${PROJECT_SOURCE_DIR}/lib/libGraph.a
+        ${PROJECT_SOURCE_DIR}/lib/libLabTools.a)
+
+target_link_libraries(${PROJECT_NAME} ${LIB})
