@@ -7,8 +7,8 @@
 
 
 void MapOfLocation::initializationParameters(std::pair<int, int> *setOfVertexes, int *pred, int *distance) {
-    for (int i = 0; i < getNumVer(); ++i) {
-        setOfVertexes[i].first = vertexes[i].second;
+    for (uint i = 0; i < getNumVer(); ++i) {
+        setOfVertexes[i].first = i;
         setOfVertexes[i].second = -1;
         pred[i] = -1;
         distance[i] = -1;
@@ -80,19 +80,19 @@ MapOfLocation::MapOfLocation(const std::vector<Vertex> &_vertexes, const std::ve
     std::vector <WayDescription> FoundWays;
 
     for (int i = 0; i < size; ++i) {
-        FoundWays = findShortWays(vertexes[i].second);
+        FoundWays = findShortWays(i);
         for (int j = 0; j < FoundWays.size(); ++j) { tableOfShortestWay[start++] = FoundWays[j]; }
     }
 
 }
 
-MapOfLocation::MapOfLocation(const Graph &graph) : Graph(graph), tableOfShortestWay(vertexes.size()*vertexes.size()) {
+MapOfLocation::MapOfLocation(const Graph &graph) : Graph(graph), tableOfShortestWay(this->getNumVer()*this->getNumVer()) {
     unsigned int size = getNumVer();
     int start = 0;
     std::vector <WayDescription> FoundWays;
 
     for (int i = 0; i < size; ++i) {
-        FoundWays = findShortWays(vertexes[i].second);
+        FoundWays = findShortWays(i);
         for (int j = 0; j < FoundWays.size(); ++j) { tableOfShortestWay[start++] = FoundWays[j]; }
     }
 
@@ -124,7 +124,7 @@ WayDescription MapOfLocation::FindShortestWay(const Graph::Vertex &ver_from, con
     WayGlobalID.way.resize(WayLocalID.way.size());
 
     for (int i = 0; i < WayLocalID.way.size(); ++i)
-        WayGlobalID.way[i] = vertexes[WayLocalID.way[i]].first.getID();
+        WayGlobalID.way[i] = getVertex(WayLocalID.way[i]).getID();
 
     WayGlobalID.dist = WayLocalID.dist;
 
@@ -132,7 +132,7 @@ WayDescription MapOfLocation::FindShortestWay(const Graph::Vertex &ver_from, con
 }
 
 void MapOfLocation::answerOnYourQuestion() const {
-    for (auto a : tableOfShortestWay)
+    for (const auto &a : tableOfShortestWay)
         std::cout << a;
 }
 
