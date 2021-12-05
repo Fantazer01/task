@@ -6,20 +6,28 @@
 #define TASK1_WAYDESCRIPTION_H
 
 
+#include <utility>
 #include <vector>
 #include <iostream>
 
 struct WayDescription {
 public:
-    unsigned int from;
-    unsigned int to;
-    std::vector<unsigned int> way;
-    unsigned int dist;
+    uint from;
+    uint to;
+    std::vector<uint> way;
+    uint dist;
 
     WayDescription(): from(0), to(0), dist(0) {}
-    WayDescription(unsigned int _from, unsigned int _to): from(_from), to(_to), dist(0) {}
+    WayDescription(uint _from, uint _to): from(_from), to(_to), dist(0) {}
+    WayDescription(uint _from, uint _to, std::vector<uint> _way): from(_from), to(_to), way(std::move(_way)), dist(0) {}
+    WayDescription(uint _from, uint _to, std::vector<uint> _way, uint _dist): from(_from), to(_to), way(std::move(_way)), dist(_dist) {}
 
     void reverse();
+
+    bool operator == (const WayDescription &wayD) const
+    { return
+        (from == wayD.from && to == wayD.to && way == wayD.way && dist == wayD.dist);
+    }
 
     friend std::ostream& operator << (std::ostream&, const WayDescription &);
 };
