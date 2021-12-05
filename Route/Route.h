@@ -22,6 +22,7 @@ public:
 
     unsigned int getId() const { return id; }
     unsigned int getIdTruck() const { return idTruck; }
+    uint getDistance() const;
     std::list<std::pair<WayDescription, Order>> getWays() const { return ways; }
 
     void setId(unsigned int _id) { id = _id; }
