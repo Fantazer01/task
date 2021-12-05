@@ -103,11 +103,12 @@ WayDescription MapOfLocation::ShortestWayFromTo(int &from, int &to) const {
     int min = std::min(from, to);
     int max = std::max(from, to);
 
-    for (WayDescription a : tableOfShortestWay)
+    for (const WayDescription &a : tableOfShortestWay)
         if (a.from == min && a.to == max) {
+            WayDescription b = a;
             if (from != min)
-                a.reverse();
-            return a;
+                b.reverse();
+            return b;
         }
 
     return {};
@@ -131,9 +132,47 @@ WayDescription MapOfLocation::FindShortestWay(const Graph::Vertex &ver_from, con
     return WayGlobalID;
 }
 
+WayDescription MapOfLocation::FindWay(const Vertex &ver_from, const Vertex &ver_to) const
+{
+    int index_from(findVertex(ver_from)), index_to(findVertex(ver_to));
+    WayDescription WayGlobalID(ver_from.getID(), ver_to.getID());
+
+    if (index_from == -1 || index_to == -1)
+        return WayGlobalID;
+
+    WayDescription WayLocalID = ShortestWayFromTo(index_from, index_to);
+    WayGlobalID.way.resize(WayLocalID.way.size());
+
+    for (int i = 0; i < WayLocalID.way.size(); ++i)
+        WayGlobalID.way[i] = getVertex(WayLocalID.way[i]).getID();
+
+    WayGlobalID.dist = WayLocalID.dist;
+
+    return WayGlobalID;
+}
+
+WayDescription MapOfLocation::FindWay(const uint &id_from, const uint &id_to) const
+{
+    int index_from(findVertex(Vertex(id_from))), index_to(findVertex(Vertex(id_to)));
+    WayDescription WayGlobalID(id_from, id_to);
+
+    if (index_from == -1 || index_to == -1)
+        return WayGlobalID;
+
+    WayDescription WayLocalID = ShortestWayFromTo(index_from, index_to);
+    WayGlobalID.way.resize(WayLocalID.way.size());
+
+    for (int i = 0; i < WayLocalID.way.size(); ++i)
+        WayGlobalID.way[i] = getVertex(WayLocalID.way[i]).getID();
+
+    WayGlobalID.dist = WayLocalID.dist;
+
+    return WayGlobalID;
+}
+
 void MapOfLocation::answerOnYourQuestion() const {
     for (const auto &a : tableOfShortestWay)
-        std::cout << a;
+        std::cout << a << "\n";
 }
 
 

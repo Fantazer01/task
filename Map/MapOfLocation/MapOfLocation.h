@@ -24,6 +24,8 @@ public:
     explicit MapOfLocation(const Graph &graph);
 
     WayDescription FindShortestWay(const Vertex &ver1, const Vertex &ver2) const;
+    WayDescription FindWay(const Vertex &ver1, const Vertex &ver2) const;
+    WayDescription FindWay(const uint &id1, const uint &id2) const;
 
     void answerOnYourQuestion() const;
 
