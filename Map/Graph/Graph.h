@@ -44,7 +44,7 @@ private:
     void initialization(const std::vector<Edge> &_signature);
 protected:
     //helper methods
-    int distBetweenVertexes(const uint &index1, const uint &index2);
+    int distBetweenVertexes(const uint &index1, const uint &index2) const;
     int findVertex(const Vertex &ver) const;
     Vertex getVertex(const uint &index) const;
 public:
@@ -59,9 +59,9 @@ public:
     unsigned int getNumVer() const { return numVer; }
     const_iteratorV begin() const { return vertexes.cbegin(); }
     const_iteratorV end() const { return vertexes.cend(); }
-    int getConnection(const Vertex &ver1, const Vertex &ver2);
-    int getConnection(const uint &id1, const uint &id2);
-    int getConnection(const const_iteratorV &it1, const const_iteratorV &it2);
+    int getConnection(const Vertex &ver1, const Vertex &ver2) const;
+    int getConnection(const uint &id1, const uint &id2) const;
+    int getConnection(const const_iteratorV &it1, const const_iteratorV &it2) const;
 
     std::ostream& put(std::ostream&) const;
 

@@ -88,7 +88,7 @@ Graph::~Graph() {
     delete [] signature;
 }
 
-int Graph::distBetweenVertexes(const uint &index1, const uint &index2) {
+int Graph::distBetweenVertexes(const uint &index1, const uint &index2) const {
     if (index1 >= numVer || index2 >= numVer)
         throw std::invalid_argument("invalid index");
 
@@ -120,7 +120,7 @@ Graph& Graph::operator = (const Graph &graph) {
     return *this;
 }
 
-int Graph::getConnection(const Vertex &ver1, const Vertex &ver2) {
+int Graph::getConnection(const Vertex &ver1, const Vertex &ver2) const {
     int index1, index2;
     index1 = findVertex(ver1);
     index2 = findVertex(ver2);
@@ -131,7 +131,7 @@ int Graph::getConnection(const Vertex &ver1, const Vertex &ver2) {
     return distBetweenVertexes(index1, index2);
 }
 
-int Graph::getConnection(const uint &id1, const uint &id2) {
+int Graph::getConnection(const uint &id1, const uint &id2) const {
     int index1, index2;
     index1 = findVertex(Vertex(id1));
     index2 = findVertex(Vertex(id2));
@@ -142,7 +142,7 @@ int Graph::getConnection(const uint &id1, const uint &id2) {
     return distBetweenVertexes(index1, index2);
 }
 
-int Graph::getConnection(const const_iteratorV &it1, const const_iteratorV &it2) {
+int Graph::getConnection(const const_iteratorV &it1, const const_iteratorV &it2) const {
     return distBetweenVertexes(it1-vertexes.cbegin(), it2-vertexes.cbegin());
 }
 

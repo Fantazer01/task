@@ -32,7 +32,7 @@ add_subdirectory(LabTools/lib)
 add_subdirectory(Map/PriorityQueue)
 add_subdirectory(Map/Graph/test)
 add_subdirectory(Map/Graph/lib)
-add_subdirectory(Map/MapOfLocation)
+add_subdirectory(Map/MapOfLocation/test)
 
 add_executable(${PROJECT_NAME} ${SOURCES})
 
