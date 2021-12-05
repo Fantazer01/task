@@ -3,15 +3,18 @@ project(task1)
 
 set(CMAKE_CXX_STANDARD 14)
 
-set(SOURCES src/main.cpp
-            src/logic/logic.cpp
-            src/Dialog/Dialog.cpp
-            Map/WayDescription/WayDescription.cpp
-            Map/MapOfLocation/MapOfLocation.cpp
-            Map/PriorityQueue/PriorityQueue.cpp
-            Order/Order.cpp
-            Truck/Truck.cpp
-            Route/Route.cpp
+set(SOURCES
+        src/main.cpp
+        src/logic/logic.cpp
+        src/Dialog/addPrintOrders.cpp
+        src/Dialog/menu.cpp
+        src/Dialog/Dialog.cpp
+        Map/WayDescription/WayDescription.cpp
+        Map/MapOfLocation/MapOfLocation.cpp
+        Map/PriorityQueue/PriorityQueue.cpp
+        Order/Order.cpp
+        Truck/Truck.cpp
+        Route/Route.cpp
 )
 
 
