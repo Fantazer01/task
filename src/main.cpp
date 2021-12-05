@@ -4,15 +4,15 @@
 
 int main(int argc, char* argv[]) {
     using namespace std;
-
+    //создаем карту
     MapOfLocation map = initMap(argc, argv);
-
+    //задаем доступные нам машины
     vector<Truck> trucks = {
             {0, 8, 10},
             {1, 8, 10},
             {2, 8, 10}
     };
-
+    //создали список заказов
     list<Order> orders;
     int id_WH = 0;
 
@@ -42,9 +42,11 @@ int main(int argc, char* argv[]) {
             case 7:
                 calculatePrintRoutes(map, id_WH, orders, trucks);//расчитать маршруты
                 break;
+            default:
+                break;
         }
-        std::cin.get();
-        std::cin.get();
+        cin.get();
+        cin.get();
     }
 
     return 0;
